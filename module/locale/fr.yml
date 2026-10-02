@@ -1,0 +1,19 @@
+bugfixes: Bugfixes
+balance_changes: Balance Changes
+enemy_gates_closed: Considérer les portes ennemies comme fermées
+enemy_gates_closed_tooltip: Les troupes contournent les portes ennemies, même ouvertes.
+  Les portes amies ou capturées restent accessibles.
+detection_group: Fermeture des portes
+centred: Mesurer la distance depuis le centre
+reachable_only: Ignorer les ennemis sans accès à la porte
+reachable_only_tooltip: Les ennemis derrière un mur, des douves ou une falaise ne
+  ferment pas la porte si les zones sont séparées.
+walls_group: Portes et escaliers
+stairs_needed: Les troupes humaines doivent utiliser les escaliers
+stairs_needed_tooltip: Les troupes humaines ont besoin d’escaliers pour atteindre
+  les remparts et les toits des portes. Expérimental ; désactivé par défaut.
+stairs_needed_ai: Les troupes de l’IA doivent utiliser les escaliers
+stairs_needed_ai_tooltip: Appliquer la même règle à l’IA. Les châteaux sans escalier
+  risquent de laisser leurs remparts inoccupés.
+tags.bugfixes: Corrections
+tags.balance: Équilibrage

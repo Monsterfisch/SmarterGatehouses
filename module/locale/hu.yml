@@ -1,0 +1,19 @@
+bugfixes: Bugfixes
+balance_changes: Balance Changes
+enemy_gates_closed: Az ellenséges kapuk zártnak számítanak
+enemy_gates_closed_tooltip: A csapatok a nyitott ellenséges kapukat is elkerülik.
+  A baráti és elfoglalt kapuk átjárhatók maradnak.
+detection_group: Kapuk bezárása
+centred: Távolság mérése a kapu közepétől
+reachable_only: Az elérhetetlen ellenségek figyelmen kívül hagyása
+reachable_only_tooltip: A fal, várárok vagy szikla mögötti ellenség nem zárja be a
+  kaput, ha a területek nem kapcsolódnak.
+walls_group: Kapuk és lépcsők
+stairs_needed: A játékos csapatainak lépcső kell
+stairs_needed_tooltip: A játékos csapatai csak lépcsőn jutnak a falakra és a kapuházak
+  tetejére. Kísérleti; alapból kikapcsolva.
+stairs_needed_ai: Az MI csapatainak is lépcső kell
+stairs_needed_ai_tooltip: Ugyanez a szabály az MI-re. Lépcsők nélküli várak falai
+  katonák nélkül maradhatnak.
+tags.bugfixes: Hibajavítások
+tags.balance: Egyensúly

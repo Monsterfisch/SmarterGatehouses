@@ -1,0 +1,19 @@
+bugfixes: Bugfixes
+balance_changes: Balance Changes
+enemy_gates_closed: Düşman kapılarını kapalı say
+enemy_gates_closed_tooltip: Birlikler açık olanlar dâhil düşman kapılarını dolaşır.
+  Dost ve ele geçirilmiş kapılar geçişe açık kalır.
+detection_group: Kapıların kapanması
+centred: Kapanma mesafesini merkezden ölç
+reachable_only: Kapıya ulaşamayan düşmanları yok say
+reachable_only_tooltip: Bölgeleri bağlantısızsa duvar, hendek veya uçurum arkasındaki
+  düşmanlar kapıyı kapatmaz.
+walls_group: Kapılar ve merdivenler
+stairs_needed: Oyuncu birlikleri merdiven kullanmalı
+stairs_needed_tooltip: Oyuncu birlikleri surlara ve kapı çatılarına çıkmak için merdiven
+  kullanır. Deneysel; varsayılan olarak kapalı.
+stairs_needed_ai: Yapay zekâ birlikleri de merdiven kullanmalı
+stairs_needed_ai_tooltip: Aynı kuralı yapay zekâya uygula. Merdivensiz kalelerin surları
+  boş kalabilir.
+tags.bugfixes: Hata düzeltmeleri
+tags.balance: Denge
