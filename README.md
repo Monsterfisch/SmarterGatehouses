@@ -1,6 +1,8 @@
 # Smarter Gatehouses
 
-A UCP3 module for Stronghold Crusader and Stronghold Crusader Extreme. Gatehouses close only for
+A UCP3 module for Stronghold Crusader and Stronghold Crusader Extreme, shown in the UCP GUI as
+"Gatehouse Fixes" (UCP package integration and translations: Krarilotus, see `module/CREDITS.md`).
+Gatehouses close only for
 enemies who can actually reach them, measure that distance from their middle, count as shut to
 enemy troops looking for a way in, and - as an option, for the player and the AI separately -
 stop working as staircases onto the walls.
