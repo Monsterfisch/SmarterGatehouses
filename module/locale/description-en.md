@@ -23,7 +23,7 @@ they go through it, up the stairs and onto it. Point at a spot that can only be 
 using a gatehouse as stairs and you get the "can't go there" cursor, and the troops stay where
 they are. A second click while they are inside the gate does not get them up either.
 The same rule can be switched on for the AI separately; an AI castle without stairs then
-cannot man its walls.
+cannot man its walls. Assassins are left out of the rule and climb as before (a switch of its own).
 
 ## Settings
 
@@ -34,5 +34,6 @@ cannot man its walls.
 | Only close for enemies who can walk to the gate | on |
 | Your troops need stairs to get onto the walls | off |
 | The AI's troops need stairs too | off |
+| Assassins still climb as they like | on |
 
 Works on Stronghold Crusader and Stronghold Crusader Extreme.

@@ -39,3 +39,7 @@ stairs_needed_ai_tooltip: |
   The same rule for every AI player. Experimental: an AI castle built without stairs can no
   longer put troops on its walls, and troops the AI sends somewhere they cannot reach stop
   where they are.
+assassins_climb: Assassins still climb as they like
+assassins_climb_tooltip: |
+  Assassins scale walls with their hooks, so the stairs rule leaves them alone: they climb
+  onto walls and gatehouses, and walk through gates, exactly as in the unmodified game.

@@ -25,7 +25,7 @@ local templates = require("templates")
 local DEFAULTS = {
   pathing = { enemy_gates_closed = true },
   detection = { centred = true, reachable_only = true },
-  walls = { stairs_needed = false, stairs_needed_ai = false },
+  walls = { stairs_needed = false, stairs_needed_ai = false, assassins_climb = true },
 }
 
 ---------------------------------------------------------------------------------------
@@ -134,6 +134,7 @@ local UNIT_IN_PASSAGE = 0x614 + 0x402         -- from UnitsState + index * 0x490
 local UNIT_CAN_CLIMB = 0x614 + 0x360
 local UNIT_START = 0x614                      -- UnitsState + index * 0x490 + this = the unit
 local UNIT_OWNER = 0x614 + 0x96
+local UNIT_TYPE = 0x614 + 0x8E
 
 -- processUnitMove, stepping a unit along its route: the x / y change for each of the eight
 -- directions a route is written in.
@@ -157,7 +158,7 @@ local MAX_STAGGER = 8                         -- gatehouses tried for a there-an
 local C = {
   CENTRE_ENABLED = 0, REACH_ENABLED = 4, ENEMY_ENABLED = 8, TOP_ENABLED = 12,
   GATE_COUNT = 16, LINK_COUNT = 20, CUT_X = 24, CUT_Y = 28, CUT_N = 32,
-  SPECIAL_R1 = 36, SPECIAL_R2 = 40, SPECIAL_P = 44, AI_ENABLED = 48,
+  SPECIAL_R1 = 36, SPECIAL_R2 = 40, SPECIAL_P = 44, AI_ENABLED = 48, ASSASSINS_FREE = 52,
   GATE_LIST = 64,
 }
 C.LINK_LIST = C.GATE_LIST + MAX_GATES * 8
@@ -318,6 +319,7 @@ return {
     local reachableOn = setting(config, "detection", "reachable_only")
     local stairsOn = setting(config, "walls", "stairs_needed")
     local stairsAiOn = setting(config, "walls", "stairs_needed_ai")
+    local assassinsOn = setting(config, "walls", "assassins_climb")
 
     ---------------------------------------------------------------------------------
     -- Find the game code
@@ -346,6 +348,7 @@ return {
     writeInteger(control + C.ENEMY_ENABLED, enemyClosedOn and 1 or 0)
     writeInteger(control + C.TOP_ENABLED, stairsOn and 1 or 0)
     writeInteger(control + C.AI_ENABLED, stairsAiOn and 1 or 0)
+    writeInteger(control + C.ASSASSINS_FREE, assassinsOn and 1 or 0)
 
     ---------------------------------------------------------------------------------
     -- When a gatehouse closes
@@ -461,6 +464,7 @@ return {
             MAX_CLIMBS = MAX_CLIMBS,
             SHADOW = control + C.SHADOW,
             CAN_NAV = canNavigate,
+            ASSASSINS_FREE = control + C.ASSASSINS_FREE,
           })
         else
           stairsOn = false
@@ -514,6 +518,8 @@ return {
         local pathSearch = core.allocateAssembly(templates.path_search, {
           TOP_ENABLED = control + C.TOP_ENABLED,
           AI_ENABLED = control + C.AI_ENABLED,
+          ASSASSINS_FREE = control + C.ASSASSINS_FREE,
+          UNIT_TYPE = UNIT_TYPE,
           UNIT_OWNER = UNIT_OWNER,
           PLAYER_AIC = playerAic,
           TWO_LEGS = twoLegs,
@@ -583,6 +589,7 @@ return {
               PLAYER_AIC = playerAic,
               TOP_ENABLED = control + C.TOP_ENABLED,
               AI_ENABLED = control + C.AI_ENABLED,
+              ASSASSINS_FREE = control + C.ASSASSINS_FREE,
               BUILDING_MAP = buildingMap,
               BUILDINGS = buildings,
               ROW_TABLE = rowTable,
@@ -615,9 +622,9 @@ return {
 
     log(INFO, string.format(
       "smarter-gatehouses: enemy gates closed %s, centred %s, reachable only %s, stairs "
-      .. "needed %s, for the AI %s; %d place(s) in the game changed.",
+      .. "needed %s, for the AI %s, assassins climb %s; %d place(s) in the game changed.",
       tostring(enemyClosedOn), tostring(centredOn), tostring(reachableOn),
-      tostring(stairsOn), tostring(stairsAiOn), #patched))
+      tostring(stairsOn), tostring(stairsAiOn), tostring(assassinsOn), #patched))
   end,
 
   disable = function(self, config)

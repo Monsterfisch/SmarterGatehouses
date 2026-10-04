@@ -61,3 +61,11 @@ options:
     contents:
       type: boolean
       value: false
+  - url: smarter-gatehouses.walls.assassins_climb
+    name: smarter-gatehouses-walls-assassins-climb
+    text: '{{assassins_climb}}'
+    tooltip: '{{assassins_climb_tooltip}}'
+    display: Switch
+    contents:
+      type: boolean
+      value: true

@@ -480,5 +480,44 @@ def section9(extreme):
 
 for extreme in (False, True):
     section9(extreme)
+
+def section10(extreme):
+    print('10. assassins climb as they like')
+    for free in (True, False):
+        W = World(extreme, cfg(enemy=False, stairs=True) | {'walls': {'stairs_needed': True, 'stairs_needed_ai': False, 'assassins_climb': free}})
+        W.gate(); W.lay()
+        H = W.H
+        H.put32(W.pf + 0x1BB38, 0x51000000)
+        for x, y in [(50, 95), (60, 95), (GX - 1, GY + 2)]:
+            W.area_set(x, y, 1)
+        W.area_set(GX + 5, GY + 2, 3)
+        for j in range(5):
+            for i in range(5):
+                W.area_set(GX + i, GY + j, 2)
+        WALL = (GX + 2, GY - 1)
+        H.put32(W.flags + W.tile(*WALL) * 4, 0x100); W.area_set(*WALL, 2)
+        H.put8(W.linkage + W.tile(*WALL), 0x10)
+        H.put8(W.linkage + W.tile(GX + 2, GY), W.link_at(GX + 2, GY) | 0x01)
+        W.climb(1, 4, GATE, 1, 3, 2)
+        before = W.links()
+        log = []
+        H.cpu.hooks[W.dopath] = planner(W, log)
+        u = W.unit(3, (50, 95))
+        H.put16(u + 0x8E, 0x49)
+        calls, eax = W.search2(3, WALL)
+        tag = 'switch on' if free else 'switch off'
+        if free:
+            check('assassin, %s: the game\'s own search, untouched' % tag, (len(log), log[0]['links'] == before, eax > 0), (1, True, True))
+            check('   cursor: fine without stairs', W.cursor(3, WALL), 1)
+            check('   anyone else stepping in at the entrance: still the rule', flag(W, 4, (GX, GY + 2), (GX - 1, GY + 2), 0, 0), 0xA)
+            u4 = W.units + 4 * 0x490
+            H.put16(u4 + 0x8E, 0x49)
+            check('   assassin on a gatehouse: the game decides', flag(W, 4, (GX, GY + 2), (GX - 1, GY + 2), 0, 0), 'game')
+        else:
+            check('assassin, %s: the rule applies' % tag, W.cursor(3, WALL), 0)
+
+
+for extreme in (False, True):
+    section10(extreme)
 print()
 print('FAILURES: %s' % ', '.join(FAILS) if FAILS else 'ALL OK')

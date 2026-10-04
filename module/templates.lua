@@ -1054,6 +1054,11 @@ local passage_flag = [[
 push ebx
 push ebp
 push edi
+cmp dword [ASSASSINS_FREE], 0
+je f_who
+cmp word [eax+UNITS+0x8E], 0x49
+je f_vanilla
+f_who:
 movsx ecx, word [eax+UNITS+0x96]
 imul ecx, ecx, 0x39F4
 cmp dword [ecx+PLAYER_AIC], 0
@@ -1185,6 +1190,11 @@ push ebp
 mov ebp, ecx
 xor ebx, ebx
 mov dword [RULES_NOW], 0
+cmp dword [ASSASSINS_FREE], 0
+je who
+cmp word [esi+UNIT_TYPE], 0x49
+je search
+who:
 movsx eax, word [esi+UNIT_OWNER]
 imul eax, eax, 0x39F4
 cmp dword [eax+PLAYER_AIC], 0
@@ -1450,6 +1460,9 @@ ret
 -- call of the game's own calculateCanPlayerUnitsNavigateToAreaFromArea, and its answer is
 -- the rule: through a gate, yes; up onto the roof from its own passage, no.
 --
+-- Assassins (unit type 0x49) climb walls with their hooks; while that setting is on they
+-- are always answered yes, and the wrapper and the passage decision leave them to the game.
+--
 -- Any trip between two different areas is asked about - wall to wall too, since walls with
 -- no stairs between them are only joined through the ground. A unit down in a gatehouse's
 -- passage (+0x402)
@@ -1461,6 +1474,11 @@ push esi
 push edi
 push ebp
 mov esi, [esp+20]
+cmp dword [ASSASSINS_FREE], 0
+je k_any
+cmp word [esi+0x8E], 0x49
+je ok
+k_any:
 xor ebx, ebx
 movsx eax, word [esi+0xC4]
 movsx ecx, word [esi+0xC6]
