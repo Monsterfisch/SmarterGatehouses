@@ -17,5 +17,8 @@ stairs_needed_ai_tooltip: Dieselbe Regel für KI-Spieler. Burgen ohne Treppen k�
   ihre Mauern unbesetzt lassen.
 assassins_climb: Assassinen klettern weiterhin
 assassins_climb_tooltip: Assassinen erklimmen Mauern mit ihren Haken; die Treppenregel gilt für sie nicht.
+damage_group: "Truppen auf Torhäusern"
+large_gatehouse_damage: "Fernkampfschaden auf großem Torhaus (%)"
+large_gatehouse_damage_tooltip: "Truppen auf einem großen Torhaus erleiden diesen Anteil des Schadens durch Pfeile, Bolzen und Schleudersteine. Auf dem kleinen Torhaus halten Truppen länger durch; ein niedrigerer Wert gleicht das aus. 100 = unverändert."
 tags.bugfixes: Fehlerkorrekturen
 tags.balance: Balance

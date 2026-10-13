@@ -17,5 +17,8 @@ stairs_needed_ai_tooltip: Apply the same rule to AI players. Castles without sta
   may leave their walls unmanned.
 assassins_climb: Assassins still climb walls
 assassins_climb_tooltip: Assassins scale walls with their hooks, so the stairs rule leaves them alone.
+damage_group: "Troops on gatehouses"
+large_gatehouse_damage: "Ranged damage on a large gatehouse (%)"
+large_gatehouse_damage_tooltip: "Troops standing on top of a large gatehouse take this share of the damage from arrows, bolts and sling stones. Troops last longer on a small gatehouse; lower this to even it out. 100 = unchanged."
 tags.bugfixes: Bug fixes
 tags.balance: Balance

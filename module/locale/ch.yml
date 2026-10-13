@@ -13,5 +13,8 @@ stairs_needed_ai: AI部队也需要阶梯
 stairs_needed_ai_tooltip: 对AI使用相同规则。没有阶梯的城堡可能无法在城墙上驻军。
 assassins_climb: 刺客仍可攀爬
 assassins_climb_tooltip: 刺客用钩索攀爬城墙，不受阶梯规则限制。
+damage_group: "城门上的部队"
+large_gatehouse_damage: "大型城门上受到的远程伤害（%）"
+large_gatehouse_damage_tooltip: "站在大型城门顶部的部队受到箭矢、弩箭和投石的伤害为此比例。部队在小型城门上更耐打；降低此值可拉平差距。100 = 不变。"
 tags.bugfixes: 错误修复
 tags.balance: 平衡

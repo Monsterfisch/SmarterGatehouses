@@ -17,5 +17,8 @@ stairs_needed_ai_tooltip: Aplicar la misma regla a la IA. Los castillos sin esca
   pueden dejar sus murallas sin tropas.
 assassins_climb: Los asesinos siguen trepando
 assassins_climb_tooltip: Los asesinos escalan las murallas con sus garfios; la regla de las escaleras no se les aplica.
+damage_group: "Tropas sobre puertas"
+large_gatehouse_damage: "Daño a distancia en puerta grande (%)"
+large_gatehouse_damage_tooltip: "Las tropas sobre una puerta grande reciben esta parte del daño de flechas, virotes y piedras de honda. Aguantan más en la puerta pequeña; bájalo para igualarlas. 100 = sin cambios."
 tags.bugfixes: Correcciones
 tags.balance: Equilibrio

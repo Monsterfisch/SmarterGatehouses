@@ -1150,6 +1150,46 @@ ret
 ]]
 
 ---------------------------------------------------------------------------------------
+-- Damage to troops on top of a large gatehouse
+---------------------------------------------------------------------------------------
+-- Replaces "sub [esi + edi + health], ecx" in UnitsState::processEntityDamageToUnit, where
+-- a projectile's damage (ECX) is taken off a unit (ESI = index * 0x490, EDI = UnitsState;
+-- BX is still the projectile's entity type). For arrows (1), crossbow bolts (7), ballista
+-- bolts (0x14) and slinger stones (0x21) hitting a unit that stands on top of a large
+-- gatehouse (building type 0x2D, passage byte +0x402 clear) the damage is scaled by
+-- LARGE_PCT percent first. The game's damage sums are the same for both gatehouses; troops
+-- still last longer on the small one in play, so this evens it out by hand.
+local gate_damage = [[
+cmp bx, 1
+je g_kind
+cmp bx, 7
+je g_kind
+cmp bx, 0x14
+je g_kind
+cmp bx, 0x21
+jne g_apply
+g_kind:
+mov eax, [esi+edi+0x6E8]
+movzx edx, word [eax*2+BUILDING_MAP]
+test edx, edx
+je g_apply
+imul edx, edx, 0x32C
+cmp word [edx+BUILDINGS+0xD2], 0x2D
+jne g_apply
+cmp byte [esi+edi+0xA16], 0
+jne g_apply
+mov eax, ecx
+imul eax, eax, LARGE_PCT
+mov ecx, 100
+cdq
+idiv ecx
+mov ecx, eax
+g_apply:
+sub [esi+edi+0x9DC], ecx
+jmp RESUME
+]]
+
+---------------------------------------------------------------------------------------
 -- Route finding: the wrapper
 ---------------------------------------------------------------------------------------
 -- Stands in for the call to PathFindingState::doPathfinding(player, flag) in
@@ -1706,6 +1746,7 @@ return {
   two_legs = two_legs,
   route_ok = route_ok,
   passage_flag = passage_flag,
+  gate_damage = gate_damage,
   restore = restore,
   path_search = path_search,
 }

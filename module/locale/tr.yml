@@ -17,5 +17,8 @@ stairs_needed_ai_tooltip: Aynı kuralı yapay zekâya uygula. Merdivensiz kalele
   boş kalabilir.
 assassins_climb: Suikastçılar tırmanmaya devam eder
 assassins_climb_tooltip: Suikastçılar kancalarıyla surlara tırmanır; merdiven kuralı onlara uygulanmaz.
+damage_group: "Kapılardaki birlikler"
+large_gatehouse_damage: "Büyük kapıda menzilli hasar (%)"
+large_gatehouse_damage_tooltip: "Büyük kapının üstündeki birlikler oklar, cıvatalar ve sapan taşlarından gelen hasarın bu kadarını alır. Küçük kapıda daha uzun dayanırlar; eşitlemek için düşürün. 100 = değişmez."
 tags.bugfixes: Hata düzeltmeleri
 tags.balance: Denge

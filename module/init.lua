@@ -26,6 +26,7 @@ local DEFAULTS = {
   pathing = { enemy_gates_closed = true },
   detection = { centred = true, reachable_only = true },
   walls = { stairs_needed = false, stairs_needed_ai = false, assassins_climb = true },
+  damage = { large_gatehouse = 100 },
 }
 
 ---------------------------------------------------------------------------------------
@@ -117,6 +118,11 @@ local TRIBE_HOOK_SIZE = 8
 -- Which AI character each player runs; 0 is a human player.
 local AOB_PLAYER_AIC = "69 C0 F4 39 00 00 8B 88 ? ? ? ? 69 C9 A4 02 00 00"
 local PLAYER_AIC_OPERAND = 8
+
+-- UnitsState::processEntityDamageToUnit, where a projectile's damage is taken off the unit:
+-- sub [esi + edi + health], ecx / xor ebp, ebp / cmp [health], ebp / jg / mov [health], ebp.
+local AOB_UNIT_DAMAGE = "29 8C 3E DC 09 00 00 33 ED 39 AC 3E DC 09 00 00 7F 07 89 AC 3E DC 09 00 00"
+local UNIT_DAMAGE_HOOK_SIZE = 7
 
 -- Fields of a building (0x32C bytes each) and of a unit (0x490 bytes each).
 local BUILDING_STRIDE = 0x32C
@@ -320,6 +326,11 @@ return {
     local stairsOn = setting(config, "walls", "stairs_needed")
     local stairsAiOn = setting(config, "walls", "stairs_needed_ai")
     local assassinsOn = setting(config, "walls", "assassins_climb")
+    local largeDamage = DEFAULTS.damage.large_gatehouse
+    if config.damage and type(config.damage.large_gatehouse) == "number" then
+      largeDamage = math.tointeger(math.floor(config.damage.large_gatehouse)) or largeDamage
+    end
+    largeDamage = math.max(0, math.min(100, largeDamage))
 
     ---------------------------------------------------------------------------------
     -- Find the game code
@@ -620,11 +631,30 @@ return {
       end
     end
 
+    ---------------------------------------------------------------------------------
+    -- Damage to troops on top of a large gatehouse
+    ---------------------------------------------------------------------------------
+
+    if largeDamage ~= 100 then
+      local site = scanOptional(AOB_UNIT_DAMAGE, "where a projectile hurts a unit")
+      local layers = scanOptional(AOB_TILE_LAYERS, "the tile layers")
+      if site ~= nil and layers ~= nil then
+        local hook = core.allocateAssembly(templates.gate_damage, {
+          BUILDING_MAP = readAddress(layers + LAYERS_BUILDING_MAP_OPERAND),
+          BUILDINGS = buildings,
+          LARGE_PCT = largeDamage,
+          RESUME = site + UNIT_DAMAGE_HOOK_SIZE,
+        })
+        patch(site, branch(0xE9, site, hook, UNIT_DAMAGE_HOOK_SIZE))
+      end
+    end
+
     log(INFO, string.format(
       "smarter-gatehouses: enemy gates closed %s, centred %s, reachable only %s, stairs "
-      .. "needed %s, for the AI %s, assassins climb %s; %d place(s) in the game changed.",
+      .. "needed %s, for the AI %s, assassins climb %s, large gatehouse damage %d%%; %d "
+      .. "place(s) in the game changed.",
       tostring(enemyClosedOn), tostring(centredOn), tostring(reachableOn),
-      tostring(stairsOn), tostring(stairsAiOn), tostring(assassinsOn), #patched))
+      tostring(stairsOn), tostring(stairsAiOn), tostring(assassinsOn), largeDamage, #patched))
   end,
 
   disable = function(self, config)

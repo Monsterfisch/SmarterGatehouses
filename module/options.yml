@@ -62,3 +62,20 @@ options:
     contents:
       type: boolean
       value: true
+- display: GroupBox
+  category:
+  - '{{balance_changes}}'
+  header: '{{damage_group}}'
+  hasHeader: true
+  children:
+  - url: smarter-gatehouses.damage.large_gatehouse
+    name: smarter-gatehouses-damage-large-gatehouse
+    text: '{{large_gatehouse_damage}}'
+    tooltip: '{{large_gatehouse_damage_tooltip}}'
+    display: Number
+    contents:
+      type: integer
+      value: 100
+      min: 10
+      max: 100
+      step: 5
