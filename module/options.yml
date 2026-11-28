@@ -3,98 +3,86 @@ meta:
 options:
 - url: smarter-gatehouses.pathing.enemy_gates_closed
   name: smarter-gatehouses-pathing-enemy-gates-closed
-  text: '{{enemy_gates_closed}}'
-  tooltip: '{{enemy_gates_closed_tooltip}}'
-  display: Switch
+  display: UCP2Switch
   contents:
     type: boolean
-    value: true
+    value: false
+  header: '{{enemy_gates_closed}}'
+  text: '{{enemy_gates_closed_tooltip}}'
   category:
   - '{{bugfixes}}'
+  - '{{cat_gates_capture}}'
 - url: smarter-gatehouses.pathing.remember_blocked
   name: smarter-gatehouses-pathing-remember-blocked
-  text: '{{remember_blocked}}'
-  tooltip: '{{remember_blocked_tooltip}}'
-  display: Switch
+  display: UCP2Switch
   contents:
     type: boolean
-    value: true
+    value: false
+  header: '{{remember_blocked}}'
+  text: '{{remember_blocked_tooltip}}'
   category:
   - '{{bugfixes}}'
-- url: smarter-gatehouses.pathing.remember_ticks
-  name: smarter-gatehouses-pathing-remember-ticks
-  text: '{{remember_ticks}}'
-  tooltip: '{{remember_ticks_tooltip}}'
-  display: Number
+  - '{{cat_gates_capture}}'
+- url: smarter-gatehouses.detection.centred
+  name: smarter-gatehouses-detection-centred
+  display: UCP2Switch
   contents:
-    type: integer
-    value: 100
-    min: 10
-    max: 1000
-    step: 10
+    type: boolean
+    value: false
+  header: '{{centred}}'
+  text: '{{centred_tooltip}}'
   category:
   - '{{bugfixes}}'
-- display: GroupBox
+  - '{{cat_gates_capture}}'
+- url: smarter-gatehouses.detection.reachable_only
+  name: smarter-gatehouses-detection-reachable-only
+  display: UCP2Switch
+  contents:
+    type: boolean
+    value: false
+  header: '{{reachable_only}}'
+  text: '{{reachable_only_tooltip}}'
   category:
   - '{{bugfixes}}'
-  header: '{{detection_group}}'
-  hasHeader: true
-  children:
-  - url: smarter-gatehouses.detection.centred
-    name: smarter-gatehouses-detection-centred
-    text: '{{centred}}'
-    display: Switch
-    contents:
-      type: boolean
-      value: true
-  - url: smarter-gatehouses.detection.reachable_only
-    name: smarter-gatehouses-detection-reachable-only
-    text: '{{reachable_only}}'
-    tooltip: '{{reachable_only_tooltip}}'
-    display: Switch
-    contents:
-      type: boolean
-      value: true
+  - '{{cat_gates_capture}}'
 - display: GroupBox
-  category:
-  - '{{balance_changes}}'
-  header: '{{walls_group}}'
   hasHeader: true
+  header: '{{gatehouse_access}}'
   children:
   - url: smarter-gatehouses.walls.stairs_needed
     name: smarter-gatehouses-walls-stairs-needed
-    text: '{{stairs_needed}}'
-    tooltip: '{{stairs_needed_tooltip}}'
-    display: Switch
+    display: UCP2Switch
     contents:
       type: boolean
       value: false
+    header: '{{stairs_needed}}'
+    text: '{{stairs_needed_tooltip}}'
   - url: smarter-gatehouses.walls.stairs_needed_ai
     name: smarter-gatehouses-walls-stairs-needed-ai
-    text: '{{stairs_needed_ai}}'
-    tooltip: '{{stairs_needed_ai_tooltip}}'
-    display: Switch
+    display: UCP2Switch
     contents:
       type: boolean
       value: false
+    header: '{{stairs_needed_ai}}'
+    text: '{{stairs_needed_ai_tooltip}}'
   - url: smarter-gatehouses.walls.assassins_climb
     name: smarter-gatehouses-walls-assassins-climb
-    text: '{{assassins_climb}}'
-    tooltip: '{{assassins_climb_tooltip}}'
-    display: Switch
+    display: UCP2Switch
     contents:
       type: boolean
-      value: true
-- display: GroupBox
+      value: false
+    header: '{{assassins_climb}}'
+    text: '{{assassins_climb_tooltip}}'
   category:
   - '{{balance_changes}}'
-  header: '{{damage_group}}'
+  - '{{cat_castle_access}}'
+- display: GroupBox
   hasHeader: true
+  header: '{{large_gatehouse_damage}}'
   children:
   - url: smarter-gatehouses.damage.large_gatehouse
     name: smarter-gatehouses-damage-large-gatehouse
     text: '{{large_gatehouse_damage}}'
-    tooltip: '{{large_gatehouse_damage_tooltip}}'
     display: Number
     contents:
       type: integer
@@ -102,3 +90,17 @@ options:
       min: 10
       max: 100
       step: 5
+    tooltip: '{{large_gatehouse_damage_tooltip}}'
+  category:
+  - '{{balance_changes}}'
+  - '{{cat_castle_access}}'
+- url: smarter-gatehouses.pathing.remember_ticks
+  name: smarter-gatehouses-pathing-remember-ticks
+  display: Number
+  contents:
+    type: integer
+    value: 100
+    min: 10
+    max: 1000
+    step: 10
+  hidden: true

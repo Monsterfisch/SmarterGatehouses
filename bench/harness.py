@@ -19,6 +19,8 @@ from host import fasm, ucp_source
 
 MODULE = os.environ.get('TUNNELERS_MODULE',
                         r'H:\shc-modding\improved-tunnelers\module')
+# The route-search module folder (Krarilotus/ucp3-fixes route-search/).
+ROUTE_SEARCH = os.environ.get('ROUTE_SEARCH_MODULE')
 VAN_PATH = G + r'\Stronghold Crusader.exe'
 EXT_PATH = G + r'\Stronghold_Crusader_Extreme.exe'
 HEAP = 0x60000000
@@ -58,10 +60,12 @@ class Host:
 
         c = lua.table()
         c[b'AOBScan'] = self.scan
-        c[b'scanForAOB'] = self.scan
+        c[b'scanForAOB'] = lambda pattern, start=0, stop=None: next((
+            hit for hit in self.E.find(pattern.decode('ascii'))
+            if hit >= start and (stop is None or hit < stop)), 0)
         c[b'readInteger'] = lambda a: self.m.s32(int(a))
         c[b'readSmallInteger'] = lambda a: struct.unpack('<h', self.m.read(int(a), 2))[0]
-        c[b'readByte'] = lambda a: struct.unpack('<b', self.m.read(int(a), 1))[0]
+        c[b'readByte'] = lambda a: self.m.read(int(a), 1)[0]           # unsigned, as the framework's
         c[b'readBytes'] = lambda a, n: lua.table_from(list(self.m.read(int(a), int(n))))
         # The game's own code and data sit in a read-only image in the running game: only
         # the writeCode* calls may touch them, and a plain write there is an access
@@ -92,6 +96,9 @@ class Host:
         c[b'itob'] = lambda v: lua.table_from(list(struct.pack('<I', int(v) & MASK)))
         c[b'getRelativeAddress'] = lambda f, t, o=0: (int(t) - int(f) + int(o)) & MASK
         g[b'core'] = c
+        g[b'VERBOSE'] = b'VERBOSE'
+        lua.execute(b"package.loaded.core = core")
+        g[b'utils'] = lua.eval(b'dofile')(os.environ['UCP_UTILS_LUA'].encode('mbcs'))
 
         lua.execute(('package.path = [[%s\\?.lua;]] .. package.path' % MODULE).encode('mbcs'))
         self.texts = []
@@ -104,6 +111,21 @@ class Host:
             registry[b'textResourceModifier'] = trm
             g[b'modules'] = registry
 
+        self.callbacks = {}
+        registry = g[b'modules'] or lua.table()
+        maps = lua.table()
+        maps[b'registerSection'] = lambda _, name, callbacks: self.callbacks.__setitem__(name, callbacks)
+        registry[b'map-extensions'] = maps
+        g[b'modules'] = registry
+        c[b'setMemory'] = lambda a, v, n: self.m.write(a, bytes([v]) * n)
+        # The route-search module (a dependency), from ROUTE_SEARCH_MODULE, enabled first.
+        self.routes = None
+        if ROUTE_SEARCH:
+            loaded = lua.eval(b'dofile')((ROUTE_SEARCH + r'\init.lua').encode('mbcs'))
+            # init.lua also returns its proxy options (framework 3.0.7); the module is first.
+            self.routes = loaded[0] if isinstance(loaded, tuple) else loaded
+            self.routes[b'enable'](self.routes, lua.table())
+            registry[b'route-search'] = self.routes
         self.mod = lua.eval(b'dofile')((MODULE + r'\init.lua').encode('mbcs'))
         self.mod[b'enable'](self.mod, self.to_lua(config or {}))
 

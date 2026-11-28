@@ -1,3 +1,3 @@
-# Gatehouse Fixes
+# Kapuházjavítások
 
-Módosítja a kapuházakon való áthaladást és a kapuk bezárását. Minden változás külön kapcsolható. A falakra jutáshoz szükséges lépcsők szabálya alapból ki van kapcsolva.
+A kapuházak a középpontjuktól mért ellenséges távolság alapján záródnak, és a csapatok megkerülik az ellenséges kapukat. Opcionális beállítások szabályozzák a kapuháztetőkre való feljutást és a nagy kapuházon elszenvedett távolsági sebzést.

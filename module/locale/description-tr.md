@@ -1,3 +1,3 @@
-# Gatehouse Fixes
+# Kapı binası düzeltmeleri
 
-Birliklerin kapıları kullanmasını ve kapıların kapanmasını değiştirir. Her değişikliğin ayrı bir anahtarı vardır. Surlara çıkmak için merdiven zorunluluğu isteğe bağlıdır ve varsayılan olarak kapalıdır.
+Kapı binalarının düşman mesafesini merkezden ölçerek kapanmasını ve birliklerin düşman kapılarından kaçınarak rota çizmesini sağlar. İsteğe bağlı ayarlar kapı binası çatılarına erişimi ve büyük kapı binalarındaki menzilli hasarı düzenler.

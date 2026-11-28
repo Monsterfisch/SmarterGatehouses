@@ -1,3 +1,3 @@
-# Gatehouse Fixes
+# Torhauskorrekturen
 
-Ändert die Nutzung von Torhäusern und das Schließen ihrer Tore. Jede Änderung ist einzeln schaltbar. Treppen für den Mauerzugang sind optional und standardmäßig nicht erforderlich.
+Lässt Torhäuser anhand der Gegnerentfernung ab der Tormitte schließen und sorgt dafür, dass Truppen feindliche Tore bei der Wegsuche umgehen. Optionale Einstellungen regeln den Zugang zu Torhausdächern und den Fernkampfschaden auf großen Torhäusern.
